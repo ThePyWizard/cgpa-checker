@@ -15,13 +15,13 @@ def calculate_cgpa(credits, gpas):
         return 0
     return weighted_gpa / total_credits
 
-def plot_credits(credits):
+def plot_gpas(gpas):
     fig, ax = plt.subplots()
-    semesters = range(1, len(credits) + 1)
-    ax.bar(semesters, credits)
+    semesters = range(1, len(gpas) + 1)
+    ax.plot(semesters, gpas, marker='o', linestyle='-')
     ax.set_xlabel('Semester')
-    ax.set_ylabel('Credits')
-    ax.set_title('Credits per Semester')
+    ax.set_ylabel('GPA')
+    ax.set_title('GPA per Semester')
     ax.set_xticks(semesters)
     return fig
 
@@ -92,20 +92,18 @@ def main():
             if st.session_state.lottie_json2:
                 st_lottie(st.session_state.lottie_json2, height=200, key="lottie2", loop=False)
             st.success(f"Your CGPA is: {cgpa:.2f}")
-            
-            
 
-            # Plot credits graph
-            fig = plot_credits(credits)
+            # Plot GPA graph
+            fig = plot_gpas(gpas)
             st.pyplot(fig)
 
             # Create a download button for the graph
             buf = io.BytesIO()
             fig.savefig(buf, format="png")
             btn = st.download_button(
-                label="Download Credits Graph",
+                label="Download GPA Graph",
                 data=buf.getvalue(),
-                file_name="credits_graph.png",
+                file_name="gpa_graph.png",
                 mime="image/png",
                 key="download_btn",
             )
