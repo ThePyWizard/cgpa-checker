@@ -61,6 +61,10 @@ def main():
         margin-top: 0;
         padding-bottom: 20px;
     }
+    .stDownloadButton > button {
+        background-color: #ff0000 !important;
+        color: white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -85,10 +89,11 @@ def main():
 
         if st.button("Calculate CGPA"):
             cgpa = calculate_cgpa(credits, gpas)
+            if st.session_state.lottie_json2:
+                st_lottie(st.session_state.lottie_json2, height=200, key="lottie2", loop=False)
             st.success(f"Your CGPA is: {cgpa:.2f}")
             
-            if st.session_state.lottie_json2:
-                st_lottie(st.session_state.lottie_json2, height=200, key="lottie2")
+            
 
             # Plot credits graph
             fig = plot_credits(credits)
@@ -101,7 +106,8 @@ def main():
                 label="Download Credits Graph",
                 data=buf.getvalue(),
                 file_name="credits_graph.png",
-                mime="image/png"
+                mime="image/png",
+                key="download_btn",
             )
 
 if __name__ == "__main__":
